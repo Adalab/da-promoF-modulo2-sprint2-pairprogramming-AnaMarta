@@ -39,8 +39,25 @@ SELECT employee_id, COUNT(order_id) AS `numero_pedidos_trabajador`, MAX(freight)
     GROUP BY employee_id
     ORDER BY employee_id DESC;
 
-SELECT  COUNT(order_id) AS numero_pedidos, order_date
+SELECT  COUNT(order_number) AS `numero_pedidos`, DAY(order_date) AS `dia`, MONTH(order_date) AS `mes`, YEAR(ORDER_date) AS `año` -- numero de pedidos por dia, mes y año
 	FROM orders
-    GROUP BY order_date;
+    GROUP BY `dia`, `mes`, `año`
+    ORDER BY `año`, `mes`, `dia`;
 
+SELECT  COUNT(order_number) AS `numero_pedidos`, MONTH(order_date) AS `mes`, YEAR(ORDER_date) AS `año` -- numero de pedidos por mes y año
+	FROM orders
+    GROUP BY `mes`, `año`
+    ORDER BY `año`, `mes`;
 
+SELECT DISTINCT city as `ciudad`, COUNT(distinct sales_rep_employee_number) AS `empleadas` -- REVISAR PORQUE NO DA EL RESULTADO
+FROM customers
+GROUP BY `ciudad`
+HAVING
+COUNT(DISTINCT sales_rep_employee_number) >=4;
+
+SELECT check_number AS `pedido`, amount AS `cantidad_pagada`, -- Añadimos una tag de alto o bajo en función de lo pagado
+       CASE
+           WHEN amount > 2000 THEN "Alto"
+           ELSE "Bajo"
+       END AS Categoria
+FROM payments;
