@@ -105,12 +105,12 @@ los datos de todas las empleadas y sus supervisoras. Concretamente nos piden: la
 jefas. Investiga el resultado, ¿sabes decir quién es el director?*/
 SELECT * FROM northwind.employees; -- city, first_name, last_name -> Empleadas -- city, first_name, last_name -> Jefas
 
-SELECT e1.city, e1.first_name AS NombreEmpleado, e1.last_name AS ApellidoEMpleado, e2.city, e2.first_name AS NombreJefe, e2.last_name AS ApellidoJefe
-	FROM employees AS e1, employees AS e2
-	WHERE e1.employee_id <> e2.employee_id
-	AND e1.reports_to = e2.employee_id
-    GROUP BY e1.city, e1.first_name, e1.last_name, e2.city, e2.first_name, e2.last_name
-    ORDER BY e1.city;  
+SELECT `e1`.`city`, `e1`.`first_name` AS `NombreEmpleado`, `e1`.`last_name` AS `ApellidoEmpleado`, `e2`.`city`, `e2`.`first_name` AS `NombreJefe`, `e2`.`last_name` AS `ApellidoJefe`
+	FROM `employees` AS `e1`, `employees` AS `e2`
+	WHERE `e1`.`employee_id` <> `e2`.`employee_id`
+	AND `e1`.`reports_to` = `e2`.`employee_id`
+    GROUP BY `e1`.`city`, `e1`.`first_name`, `e1`.`last_name`, `e2`.`city`, `e2`.`first_name`, `e2`.`last_name`
+    ORDER BY `e1`.`city`;  
 
 
 /* 10. BONUS: FULL OUTER JOIN Pedidos y empresas con pedidos asociados o no: Selecciona todos los pedidos, tengan empresa asociada o no, y todas las
@@ -118,13 +118,14 @@ empresas tengan pedidos asociados o no. Muestra el ID del pedido, el nombre de l
 SELECT * FROM northwind.customers; -- company_name, customer_id 
 SELECT * FROM northwind.orders; -- customer_id, order_id
 
-SELECT c.company_name AS `NombreEmpresa`, o.order_id, o.order_date AS `FechaDelPedido`
-	FROM customers AS c
-    LEFT JOIN orders AS o
-    ON c.customer_id = o.customer_id
+SELECT `c`.`company_name` AS `NombreEmpresa`, `o`.`order_id`, `o`.`order_date` AS `FechaDelPedido`
+	FROM `customers` AS `c`
+    LEFT JOIN `orders` AS `o`
+    ON `c`.`customer_id` = `o`.`customer_id`
     UNION
-    SELECT o.order_id, c.company_name AS `NombreEmpresa`, o.order_date AS `FechaDelPedido`
-	FROM customers AS c
-    RIGHT JOIN orders AS o
-    ON c.customer_id = o.customer_id
+    SELECT `o`.`order_id`, `c`.`company_name` AS `NombreEmpresa`, `o`.`order_date` AS `FechaDelPedido`
+	FROM `customers` AS `c`
+    RIGHT JOIN `orders` AS `o`
+    ON `c`.`customer_id` = `o`.`customer_id`;
+-- NO IGUAL QUE LA IMAGEN
 
