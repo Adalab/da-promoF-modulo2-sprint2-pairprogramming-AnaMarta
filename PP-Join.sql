@@ -118,7 +118,7 @@ empresas tengan pedidos asociados o no. Muestra el ID del pedido, el nombre de l
 SELECT * FROM northwind.customers; -- company_name, customer_id 
 SELECT * FROM northwind.orders; -- customer_id, order_id
 
-SELECT `c`.`company_name` AS `NombreEmpresa`, `o`.`order_id`, `o`.`order_date` AS `FechaDelPedido`
+SELECT `o`.`order_id`, `c`.`company_name` AS `NombreEmpresa`, `o`.`order_date` AS `FechaDelPedido`
 	FROM `customers` AS `c`
     LEFT JOIN `orders` AS `o`
     ON `c`.`customer_id` = `o`.`customer_id`
@@ -127,5 +127,5 @@ SELECT `c`.`company_name` AS `NombreEmpresa`, `o`.`order_id`, `o`.`order_date` A
 	FROM `customers` AS `c`
     RIGHT JOIN `orders` AS `o`
     ON `c`.`customer_id` = `o`.`customer_id`;
--- NO IGUAL QUE LA IMAGEN
+
 
