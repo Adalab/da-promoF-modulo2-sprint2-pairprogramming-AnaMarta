@@ -14,7 +14,17 @@ SELECT order_id, customer_id, o1.employee_id, order_date, required_date
 						WHERE o2.employee_id = o1.employee_id);
 
 -- 2.
+SELECT product_id, MAX(unit_price) AS Max_unit_price_sold
+	FROM order_details
+    GROUP BY product_id;
 
+SELECT product_id, unit_price AS Max_unit_price_sold
+	FROM order_details AS o1
+    GROUP BY product_id, Max_unit_price_sold
+    HAVING unit_price = (SELECT MAX(unit_price)
+								FROM order_details AS o2
+                                WHERE o2.product_id = o1.product_id)
+    ORDER BY product_id;
 
 
 -- 3.
@@ -55,3 +65,15 @@ SELECT product_name AS Ten_Most_Expensive_Products, Unit_price AS UnitPrice
 	FROM products
     ORDER BY unit_price DESC
     LIMIT 10;
+
+-- 7. 
+WITH media AS (SELECT product_id, SUM(quantity) AS suma_producto
+				FROM order_details
+				GROUP BY product_id)
+
+SELECT product_name, suma_producto
+	FROM products AS p
+ INNER JOIN media AS m
+ ON p.product_id = m.product_id
+ ORDER BY suma_producto DESC
+ LIMIT 1;
