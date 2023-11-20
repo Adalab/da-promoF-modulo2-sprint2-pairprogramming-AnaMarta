@@ -49,11 +49,10 @@ SELECT  COUNT(order_number) AS `numero_pedidos`, MONTH(order_date) AS `mes`, YEA
     GROUP BY `mes`, `año`
     ORDER BY `año`, `mes`;
 
-SELECT DISTINCT city as `ciudad`, COUNT(distinct sales_rep_employee_number) AS `empleadas` -- REVISAR PORQUE NO DA EL RESULTADO
-FROM customers
-GROUP BY `ciudad`
-HAVING
-COUNT(DISTINCT sales_rep_employee_number) >=4;
+SELECT city AS `ciudad`, COUNT(employee_id) AS `empleadas`
+	FROM employees
+	GROUP BY city
+	HAVING empleadas >= 4;
 
 SELECT check_number AS `pedido`, amount AS `cantidad_pagada`, -- Añadimos una tag de alto o bajo en función de lo pagado
        CASE
